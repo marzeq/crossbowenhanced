@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.marzeq.crossbowenhanced.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+  ],
+  "client": [
+    "CrossbowDraw",
+    "CrossbowLoad",
+    "Disconnect"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

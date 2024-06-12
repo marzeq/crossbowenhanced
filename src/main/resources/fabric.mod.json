@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "crossbowenhanced",
+  "version": "${version}",
+  "name": "Crossbow Enhanced",
+  "description": "Simple mod that simplifies drawing loaded fireworks into your crossbow",
+  "authors": ["marzeq"],
+  "contact": {
+    "repo": "https://github.com/marzeq/crossbowenhanced"
+  },
+  "license": "MIT",
+  "icon": "assets/crossbowenhanced/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "me.marzeq.crossbowenhanced.CrossbowEnhanced"
+    ]
+  },
+  "mixins": [
+    "crossbowenhanced.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
