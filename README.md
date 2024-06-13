@@ -11,8 +11,8 @@
 ### Dependencies
 
 - Fabric API (required)
-- YetAnotherConfigLib (required)
-- Cloth Config (optional, to access the config menu)
+- Cloth Config (required)
+- Mod Menu (optional, to access the config menu)
 
 ### Features
 
