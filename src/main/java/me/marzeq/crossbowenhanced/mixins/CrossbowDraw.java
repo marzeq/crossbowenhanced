@@ -3,6 +3,7 @@ package me.marzeq.crossbowenhanced.mixins;
 import me.marzeq.crossbowenhanced.CrossbowEnhanced;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.CrossbowItem;
+import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,6 +13,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class CrossbowDraw {
     @Inject(at = @At("HEAD"), method = "doItemUse")
     private void useItem(CallbackInfo info) {
+        if (!CrossbowEnhanced.config.fireworksInOffHand) {
+            return;
+        }
 
         CrossbowEnhanced.resetValues();
 
@@ -22,15 +26,30 @@ public class CrossbowDraw {
             return;
         }
 
-        var item = player.getMainHandStack().getItem();
+        var handItemStack = player.getMainHandStack();
 
         var offHandItemStack = player.getOffHandStack();
 
-        if (CrossbowEnhanced.isFireworkWithEffects(offHandItemStack)) {
+        boolean crossbowInMainHand;
+
+        if (offHandItemStack.getItem() instanceof CrossbowItem) {
+            crossbowInMainHand = false;
+        } else if (handItemStack.getItem() instanceof CrossbowItem) {
+            crossbowInMainHand = true;
+        } else {
             return;
         }
 
-        if (!(item instanceof CrossbowItem) || CrossbowItem.isCharged(player.getMainHandStack())) {
+
+        if (crossbowInMainHand && CrossbowEnhanced.isFireworkWithEffects(offHandItemStack)) {
+            return;
+        } else if (!crossbowInMainHand && CrossbowEnhanced.isFireworkWithEffects(handItemStack)) {
+            return;
+        }
+
+        var crossbowItemStack = (ItemStack) (crossbowInMainHand ? handItemStack : offHandItemStack);
+
+        if (CrossbowEnhanced.isCrossbowCharged(crossbowItemStack)) {
             return;
         }
 
@@ -52,14 +71,16 @@ public class CrossbowDraw {
             return;
         }
 
+        var slotTarget = crossbowInMainHand ? CrossbowEnhanced.OFFHAND_SLOT : player.getInventory().selectedSlot;
+
         try {
-            CrossbowEnhanced.swap(slot);
+            CrossbowEnhanced.swap(slot, slotTarget);
         }  catch (NullPointerException e) {
             CrossbowEnhanced.LOGGER.error("Something went terribly wrong, stack trace:");
             e.printStackTrace();
             return;
         }
 
-        CrossbowEnhanced.swappedWithSlot(slot);
+        CrossbowEnhanced.swappedWithSlot(slot, slotTarget);
     }
 }
