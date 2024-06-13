@@ -23,7 +23,10 @@ public abstract class CrossbowLoad {
         if (!CrossbowEnhanced.CLIENT.isOnThread()) return;
 
         var crossbowHand = CrossbowEnhanced.getCurrentSlot() == CrossbowEnhanced.OFFHAND_SLOT ? Hand.MAIN_HAND : Hand.OFF_HAND;
-        System.out.println(crossbowHand);
+
+        if (CrossbowEnhanced.config.autoShoot && CrossbowEnhanced.isCrossbowCharged(stack)) {
+            CrossbowEnhanced.clickHand(crossbowHand);
+        }
 
         if (CrossbowEnhanced.config.fireworksInOffHand) {
             if (!CrossbowEnhanced.isSwapped()) return;
@@ -36,10 +39,6 @@ public abstract class CrossbowLoad {
             }
 
             CrossbowEnhanced.resetValues();
-        }
-
-        if (CrossbowEnhanced.config.autoShoot && CrossbowEnhanced.isCrossbowCharged(stack)) {
-            CrossbowEnhanced.clickHand(crossbowHand);
         }
     }
 }
