@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MinecraftClient.class)
 public class CrossbowDraw {
-    @Inject(at = @At("HEAD"), method = "doItemUse")
+    @Inject(method="doItemUse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;interactItem(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;", shift = At.Shift.AFTER))
     private void useItem(CallbackInfo info) {
         if (!CrossbowEnhanced.config.fireworksInOffHand) {
             return;
