@@ -10,9 +10,9 @@
 
 ### Dependencies
 
-- Fabric API (required)
-- Cloth Config (required)
-- Mod Menu (optional, to access the config menu)
+- Fabric API
+- Cloth Config
+- Mod Menu
 
 ### Features
 
