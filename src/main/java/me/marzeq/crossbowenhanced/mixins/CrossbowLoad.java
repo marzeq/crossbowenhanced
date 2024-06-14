@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class CrossbowLoad {
     @Inject(at = @At("TAIL"), method = "onStoppedUsing")
     private void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks, CallbackInfo ci) {
-        if (!(user instanceof PlayerEntity) || !user.equals(CrossbowEnhanced.CLIENT.player)) return;
+        if (!(user instanceof PlayerEntity) || !((PlayerEntity) user).isMainPlayer()) return;
 
         /* on singleplayer worlds, this method is actually called both by the internal server and the client.
         we don't want to swap two times, so we have to only run this on the client (aka render thread) to avoid swapping twice */

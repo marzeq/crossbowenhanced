@@ -8,7 +8,9 @@
   "client": [
     "CrossbowDraw",
     "CrossbowLoad",
-    "Disconnect"
+    "Disconnect",
+    "ChangeActiveSlot",
+    "ScrollInHotbar"
   ],
   "injectors": {
     "defaultRequire": 1
