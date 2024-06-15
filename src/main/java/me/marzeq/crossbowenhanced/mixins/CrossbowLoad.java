@@ -1,6 +1,7 @@
 package me.marzeq.crossbowenhanced.mixins;
 
 import me.marzeq.crossbowenhanced.CrossbowEnhanced;
+import me.marzeq.crossbowenhanced.SlotManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.CrossbowItem;
@@ -22,23 +23,22 @@ public abstract class CrossbowLoad {
         we don't want to swap two times, so we have to only run this on the client (aka render thread) to avoid swapping twice */
         if (!CrossbowEnhanced.CLIENT.isOnThread()) return;
 
-        var crossbowHand = CrossbowEnhanced.getCurrentSlot() == CrossbowEnhanced.OFFHAND_SLOT ? Hand.MAIN_HAND : Hand.OFF_HAND;
+        var crossbowHand = SlotManager.getCurrentSlot() == SlotManager.OFFHAND_SLOT ? Hand.MAIN_HAND : Hand.OFF_HAND;
 
         if (CrossbowEnhanced.config.autoShoot && CrossbowEnhanced.isCrossbowCharged(stack)) {
             CrossbowEnhanced.clickHand(crossbowHand);
         }
 
         if (CrossbowEnhanced.config.fireworksInOffHand) {
-            if (!CrossbowEnhanced.isSwapped()) return;
+            if (!SlotManager.isSwapped()) return;
 
             try {
-                CrossbowEnhanced.swap(CrossbowEnhanced.getPreviousSlot(), CrossbowEnhanced.getCurrentSlot());
+                SlotManager.swap(SlotManager.getPreviousSlot(), SlotManager.getCurrentSlot());
+                SlotManager.resetValues();
             } catch (NullPointerException e) {
                 CrossbowEnhanced.LOGGER.error("Something went terribly wrong, stack trace:");
                 e.printStackTrace();
             }
-
-            CrossbowEnhanced.resetValues();
         }
     }
 }

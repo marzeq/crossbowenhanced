@@ -1,6 +1,6 @@
 package me.marzeq.crossbowenhanced.mixins;
 
-import me.marzeq.crossbowenhanced.CrossbowEnhanced;
+import me.marzeq.crossbowenhanced.SlotManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerInventory;
 import org.objectweb.asm.Opcodes;
@@ -16,9 +16,9 @@ public class ChangeActiveSlot {
     private void selectedSlot(PlayerInventory inventory, int i) {
         if (inventory.selectedSlot == i) return;
 
-        if (CrossbowEnhanced.isSwapped()) {
-            CrossbowEnhanced.swap(CrossbowEnhanced.getPreviousSlot(), CrossbowEnhanced.getCurrentSlot());
-            CrossbowEnhanced.resetValues();
+        if (SlotManager.isSwapped()) {
+            SlotManager.swap(SlotManager.getPreviousSlot(), SlotManager.getCurrentSlot());
+            SlotManager.resetValues();
         }
 
         inventory.selectedSlot = i;
@@ -26,9 +26,9 @@ public class ChangeActiveSlot {
 
     @Inject(method = "doItemPick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;clickCreativeStack(Lnet/minecraft/item/ItemStack;I)V", shift = At.Shift.AFTER))
     private void doItemPick(CallbackInfo ci) {
-        if (CrossbowEnhanced.isSwapped()) {
-            CrossbowEnhanced.swap(CrossbowEnhanced.getPreviousSlot(), CrossbowEnhanced.getCurrentSlot());
-            CrossbowEnhanced.resetValues();
+        if (SlotManager.isSwapped()) {
+            SlotManager.swap(SlotManager.getPreviousSlot(), SlotManager.getCurrentSlot());
+            SlotManager.resetValues();
         }
     }
 }
