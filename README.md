@@ -18,7 +18,7 @@
 
 - Automatically swaps fireworks crafted with stars into the offhand while drawing the crossbow (if the player has any)
 - Shoots the crossbow immediately after it is fully drawn
-- Config menu to enable/disable features
+- Config menu to disable/enable features and change their functionality
 
 ### Compatibility
 
