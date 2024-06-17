@@ -21,8 +21,7 @@ public class Config {
         FROM_BOTTOM_RIGHT
     }
 
-    private Config() {
-    }
+    private Config() { }
 
     public static Config load() {
         File file = new File(

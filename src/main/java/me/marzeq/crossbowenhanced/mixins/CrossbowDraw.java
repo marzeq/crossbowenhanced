@@ -37,9 +37,8 @@ public class CrossbowDraw {
         }
 
 
-        if (crossbowInMainHand && CrossbowEnhanced.isFireworkWithEffects(offHandItemStack)) {
-            return;
-        } else if (!crossbowInMainHand && CrossbowEnhanced.isFireworkWithEffects(handItemStack)) {
+        if (crossbowInMainHand && CrossbowEnhanced.isFireworkWithEffects(offHandItemStack) ||
+                !crossbowInMainHand && CrossbowEnhanced.isFireworkWithEffects(handItemStack)) {
             return;
         }
 
@@ -69,6 +68,7 @@ public class CrossbowDraw {
     private int findSlotWithMinFireworkCount(ClientPlayerEntity player) {
         int slot = -1;
         int minValue = Integer.MAX_VALUE;
+
         int start = CrossbowEnhanced.config.order == Config.ORDER.FROM_TOP_LEFT ? 0 : 35;
         int end = CrossbowEnhanced.config.order == Config.ORDER.FROM_TOP_LEFT ? 36 : -1;
         int step = CrossbowEnhanced.config.order == Config.ORDER.FROM_TOP_LEFT ? 1 : -1;
