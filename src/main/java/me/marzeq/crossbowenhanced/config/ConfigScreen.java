@@ -20,7 +20,7 @@ public class ConfigScreen implements ModMenuApi {
 
         ConfigEntryBuilder entry = builder.entryBuilder();
 
-        builder.getOrCreateCategory(Text.of("Config Values"))
+        builder.getOrCreateCategory(Text.of("Functionality"))
                 .addEntry(entry
                         .startBooleanToggle(Text.of("Put explosive fireworks in off-hand"), config.fireworksInOffHand)
                         .setDefaultValue(Defaults.fireworksInOffHand)
@@ -30,6 +30,23 @@ public class ConfigScreen implements ModMenuApi {
                         .startBooleanToggle(Text.of("Auto shoot"), config.autoShoot)
                         .setDefaultValue(Defaults.autoShoot)
                         .setSaveConsumer(v -> config.autoShoot = v).build()
+                );
+
+        builder.getOrCreateCategory(Text.of("Drawing order"))
+                .addEntry(entry
+                        .startEnumSelector(Text.of("Order"), Config.ORDER.class, config.order)
+                        .setDefaultValue(Defaults.order)
+                        .setEnumNameProvider(value -> switch (value) {
+                            case Config.ORDER.FROM_TOP_LEFT -> Text.of("Top left to bottom right");
+                            case Config.ORDER.FROM_BOTTOM_RIGHT -> Text.of("Bottom right to top left");
+                            default -> Text.of(value.toString());
+                        })
+                        .setSaveConsumer(v -> config.order = v).build()
+                )
+                .addEntry(entry
+                        .startBooleanToggle(Text.of("Prioritise stacks with lower count"), config.prioritiseStacksWithLowerCount)
+                        .setDefaultValue(Defaults.prioritiseStacksWithLowerCount)
+                        .setSaveConsumer(v -> config.prioritiseStacksWithLowerCount = v).build()
                 );
 
         builder.setSavingRunnable(config::save);

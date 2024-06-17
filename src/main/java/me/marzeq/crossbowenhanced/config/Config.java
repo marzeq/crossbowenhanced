@@ -11,9 +11,15 @@ import java.io.IOException;
 public class Config {
     public boolean fireworksInOffHand = Defaults.fireworksInOffHand;
     public boolean autoShoot = Defaults.autoShoot;
+    public ORDER order = Defaults.order;
+    public boolean prioritiseStacksWithLowerCount = Defaults.prioritiseStacksWithLowerCount;
 
     private transient File file;
 
+    public enum ORDER {
+        FROM_TOP_LEFT,
+        FROM_BOTTOM_RIGHT
+    }
 
     private Config() {
     }
@@ -50,6 +56,8 @@ public class Config {
     public void reset() {
         fireworksInOffHand = Defaults.fireworksInOffHand;
         autoShoot = Defaults.autoShoot;
+        order = Defaults.order;
+        prioritiseStacksWithLowerCount = Defaults.prioritiseStacksWithLowerCount;
         save();
     }
 }

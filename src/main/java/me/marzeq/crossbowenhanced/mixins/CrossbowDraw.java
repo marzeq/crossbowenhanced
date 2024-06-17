@@ -2,9 +2,11 @@ package me.marzeq.crossbowenhanced.mixins;
 
 import me.marzeq.crossbowenhanced.CrossbowEnhanced;
 import me.marzeq.crossbowenhanced.SlotManager;
+import me.marzeq.crossbowenhanced.config.Config;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.CrossbowItem;
+import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -67,13 +69,22 @@ public class CrossbowDraw {
     private int findSlotWithMinFireworkCount(ClientPlayerEntity player) {
         int slot = -1;
         int minValue = Integer.MAX_VALUE;
+        int start = CrossbowEnhanced.config.order == Config.ORDER.FROM_TOP_LEFT ? 0 : 35;
+        int end = CrossbowEnhanced.config.order == Config.ORDER.FROM_TOP_LEFT ? 36 : -1;
+        int step = CrossbowEnhanced.config.order == Config.ORDER.FROM_TOP_LEFT ? 1 : -1;
 
-        for (int i = 0; i < 36; i++) {
+        for (int i = start; i != end; i += step) {
             var itemStack = player.getInventory().getStack(i);
 
-            if (CrossbowEnhanced.isFireworkWithEffects(itemStack) && itemStack.getCount() < minValue) {
-                slot = i;
-                minValue = itemStack.getCount();
+            if (CrossbowEnhanced.isFireworkWithEffects(itemStack)) {
+                if (!CrossbowEnhanced.config.prioritiseStacksWithLowerCount) {
+                    return i;
+                }
+
+                if (itemStack.getCount() < minValue) {
+                    slot = i;
+                    minValue = itemStack.getCount();
+                }
             }
         }
 
