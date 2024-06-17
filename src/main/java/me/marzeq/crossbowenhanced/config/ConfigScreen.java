@@ -24,11 +24,13 @@ public class ConfigScreen implements ModMenuApi {
                 .addEntry(entry
                         .startBooleanToggle(Text.of("Put explosive fireworks in off-hand"), config.fireworksInOffHand)
                         .setDefaultValue(Defaults.fireworksInOffHand)
+                        .setTooltip(Text.of("Put fireworks with explosive effects in the off-hand for the duration of drawing the crossbow (they will be put back in their slot afterwards)"))
                         .setSaveConsumer(v -> config.fireworksInOffHand = v).build()
                 )
                 .addEntry(entry
                         .startBooleanToggle(Text.of("Auto shoot"), config.autoShoot)
                         .setDefaultValue(Defaults.autoShoot)
+                        .setTooltip(Text.of("Automatically shoot the crossbow when it is fully charged and the player releases the right mouse button"))
                         .setSaveConsumer(v -> config.autoShoot = v).build()
                 );
 
@@ -41,11 +43,13 @@ public class ConfigScreen implements ModMenuApi {
                             case Config.ORDER.FROM_BOTTOM_RIGHT -> Text.of("Bottom right to top left");
                             default -> Text.of(value.toString());
                         })
+                        .setTooltip(Text.of("The order in which the mod will take fireworks from the inventory"))
                         .setSaveConsumer(v -> config.order = v).build()
                 )
                 .addEntry(entry
                         .startBooleanToggle(Text.of("Prioritise stacks with lower count"), config.prioritiseStacksWithLowerCount)
                         .setDefaultValue(Defaults.prioritiseStacksWithLowerCount)
+                        .setTooltip(Text.of("If there is a stack with a lower count of fireworks, that would normally not be drawn from, take from it first"))
                         .setSaveConsumer(v -> config.prioritiseStacksWithLowerCount = v).build()
                 );
 
