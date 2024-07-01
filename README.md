@@ -20,6 +20,10 @@
 - Shoots the crossbow immediately after it is fully drawn
 - Config menu to disable/enable features and change their functionality
 
+### Showcase video
+
+![showcase.gif](/assets/showcase.gif)
+
 ### Compatibility
 
 The mod should be compatible with all mods, and may even be compatible with mods that add custom crossbows, provided they extend the CrossbowItem class
