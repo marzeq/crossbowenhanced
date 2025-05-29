@@ -3,15 +3,8 @@
   "minVersion": "0.8",
   "package": "me.marzeq.crossbowenhanced.mixins",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [
-  ],
-  "client": [
-    "CrossbowDraw",
-    "CrossbowLoad",
-    "Disconnect",
-    "ChangeActiveSlot",
-    "ScrollInHotbar"
-  ],
+  "mixins": [],
+  "client": ["CrossbowDraw", "CrossbowLoad", "Disconnect", "ChangeActiveSlot"],
   "injectors": {
     "defaultRequire": 1
   }
