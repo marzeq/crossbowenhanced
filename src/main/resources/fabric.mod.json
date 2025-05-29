@@ -8,20 +8,15 @@
   "contact": {
     "repo": "https://github.com/marzeq/crossbowenhanced"
   },
+  "contributors": ["deventio7"],
   "license": "MIT",
   "icon": "assets/crossbowenhanced/icon.png",
   "environment": "client",
   "entrypoints": {
-    "client": [
-      "me.marzeq.crossbowenhanced.CrossbowEnhanced"
-    ],
-    "modmenu": [
-      "me.marzeq.crossbowenhanced.config.ConfigScreen"
-    ]
+    "client": ["me.marzeq.crossbowenhanced.CrossbowEnhanced"],
+    "modmenu": ["me.marzeq.crossbowenhanced.config.ConfigScreen"]
   },
-  "mixins": [
-    "crossbowenhanced.mixins.json"
-  ],
+  "mixins": ["crossbowenhanced.mixins.json"],
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
