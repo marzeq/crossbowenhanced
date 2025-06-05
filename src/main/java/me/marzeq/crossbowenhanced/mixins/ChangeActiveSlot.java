@@ -12,20 +12,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MinecraftClient.class)
 public class ChangeActiveSlot {
-    @Redirect(method = {"handleInputEvents", "doItemPick"}, at = @At(value = "FIELD", target = "Lnet/minecraft/entity/player/PlayerInventory;selectedSlot:I", opcode = Opcodes.PUTFIELD))
+    @Redirect(method = {"handleInputEvents", "doItemPick"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerInventory;setSelectedSlot(I)V"))
     private void selectedSlot(PlayerInventory inventory, int i) {
-        if (inventory.selectedSlot == i) return;
+        if (inventory.getSelectedSlot() == i) return;
 
         if (SlotManager.isSwapped()) {
             SlotManager.swap(SlotManager.getPreviousSlot(), SlotManager.getCurrentSlot());
             SlotManager.resetValues();
         }
 
-        inventory.selectedSlot = i;
+        inventory.setSelectedSlot(i);
     }
 
-    @Inject(method = "doItemPick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;clickCreativeStack(Lnet/minecraft/item/ItemStack;I)V", shift = At.Shift.AFTER))
-    private void doItemPick(CallbackInfo ci) {
+    @Inject(at = @At("TAIL"), method = "doItemPick")
+        private void doItemPick(CallbackInfo ci) {
         if (SlotManager.isSwapped()) {
             SlotManager.swap(SlotManager.getPreviousSlot(), SlotManager.getCurrentSlot());
             SlotManager.resetValues();

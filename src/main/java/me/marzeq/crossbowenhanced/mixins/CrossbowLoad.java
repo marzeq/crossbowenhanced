@@ -11,12 +11,12 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(CrossbowItem.class)
 public abstract class CrossbowLoad {
     @Inject(at = @At("TAIL"), method = "onStoppedUsing")
-    private void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks, CallbackInfo ci) {
+    private void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks, CallbackInfoReturnable cir) {
         if (!(user instanceof PlayerEntity) || !((PlayerEntity) user).isMainPlayer()) return;
 
         /* on singleplayer worlds, this method is actually called both by the internal server and the client.

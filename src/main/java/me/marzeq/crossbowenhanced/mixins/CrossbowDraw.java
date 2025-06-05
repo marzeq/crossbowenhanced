@@ -53,7 +53,7 @@ public class CrossbowDraw {
             return;
         }
 
-        var slotTarget = crossbowInMainHand ? SlotManager.OFFHAND_SLOT : player.getInventory().selectedSlot;
+        var slotTarget = crossbowInMainHand ? SlotManager.OFFHAND_SLOT : player.getInventory().getSelectedSlot();
 
         try {
             SlotManager.swap(slot, slotTarget);
