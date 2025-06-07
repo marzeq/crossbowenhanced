@@ -8,7 +8,7 @@
 
 - [<img src="https://cdn.modrinth.com/data/P7dR8mSH/icon.png" alt="fabric-api-image" width="16"/> Fabric API](https://modrinth.com/mod/fabric-api)
 - [<img src="https://cdn.modrinth.com/data/9s6osm5g/icon.png" alt="cloth-config-image" width="16"/> Cloth Config](https://modrinth.com/mod/cloth-config)
-- [<img src="https://cdn.modrinth.com/data/mOgUt4GM/1b6bcdef5a3d92572f517122650716be7ec6458b.webp" alt="modmenu-image" width="16"/> Mod Menu](https://modrinth.com/mod/modmenu)
+- [<img src="https://cdn.modrinth.com/data/mOgUt4GM/1bfe2006b38340e9d064700e41adf84a8abb1bd4_96.webp" alt="modmenu-image" width="16"/> Mod Menu](https://modrinth.com/mod/modmenu)
 
 ### Features
 
