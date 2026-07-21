@@ -19,7 +19,7 @@
   "mixins": ["crossbowenhanced.mixins.json"],
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "fabric": "*",
+    "fabric-api": "*",
     "cloth-config": "*",
     "modmenu": "*"
   },
