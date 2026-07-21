@@ -8,14 +8,15 @@ import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import me.shedaniel.clothconfig2.api.Requirement;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
 @Environment(EnvType.CLIENT)
 public class ConfigScreen implements ModMenuApi {
-    private net.minecraft.client.gui.screen.Screen screen(net.minecraft.client.gui.screen.Screen parent) {
+    private Screen screen(Screen parent) {
         ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent)
-                .setTitle(Text.of("Crossbow Enhanced Config"));
+                .setTitle(Component.literal("Crossbow Enhanced Config"));
 
         Config config = CrossbowEnhanced.config;
 
@@ -28,57 +29,57 @@ public class ConfigScreen implements ModMenuApi {
             }
         };
 
-        builder.getOrCreateCategory(Text.of("Projectile management"))
+        builder.getOrCreateCategory(Component.literal("Projectile management"))
                 .addEntry(entry
-                        .startBooleanToggle(Text.of("Enable feature"), config.enableProjectileManagementFeature)
+                        .startBooleanToggle(Component.literal("Enable feature"), config.enableProjectileManagementFeature)
                         .setDefaultValue(Defaults.enableProjectileManagementFeature)
-                        .setTooltip(Text.of("This effectively replaces the vanilla projectile drawing process by automatically putting desired projectiles in your off-hand.\n" +
+                        .setTooltip(Component.literal("This effectively replaces the vanilla projectile drawing process by automatically putting desired projectiles in your off-hand.\n" +
                                             "This has the added bonus of not having to worry about putting charged fireworks in your off-hand."))
                         .setSaveConsumer(v -> config.enableProjectileManagementFeature = v)
                         .build()
                 )
                 .addEntry(entry
-                        .startEnumSelector(Text.of("Preferred projectile type"), Config.PREFERRED_PROJECTILE.class, config.preferredProjectile)
+                        .startEnumSelector(Component.literal("Preferred projectile type"), Config.PREFERRED_PROJECTILE.class, config.preferredProjectile)
                         .setDefaultValue(Defaults.preferredProjectile)
                         .setEnumNameProvider(value -> switch (value) {
-                            case Config.PREFERRED_PROJECTILE.FIREWORKS -> Text.of("Fireworks");
-                            case Config.PREFERRED_PROJECTILE.TIPPED_ARROWS -> Text.of("Tipped arrows");
-                            case Config.PREFERRED_PROJECTILE.REGULAR_ARROWS -> Text.of("Regular arrows");
-                            default -> Text.of(value.toString());
+                            case Config.PREFERRED_PROJECTILE.FIREWORKS -> Component.literal("Fireworks");
+                            case Config.PREFERRED_PROJECTILE.TIPPED_ARROWS -> Component.literal("Tipped arrows");
+                            case Config.PREFERRED_PROJECTILE.REGULAR_ARROWS -> Component.literal("Regular arrows");
+                            default -> Component.literal(value.toString());
                         })
-                        .setTooltip(Text.of("The preferred projectile type. The mod will try and shoot with it first, and only when there's none will it move on to other ones"))
+                        .setTooltip(Component.literal("The preferred projectile type. The mod will try and shoot with it first, and only when there's none will it move on to other ones"))
                         .setSaveConsumer(v -> config.preferredProjectile = v)
                         .setDisplayRequirement(projectileManagementRequirement)
                         .build()
                 )
                 .addEntry(entry
-                        .startEnumSelector(Text.of("Drawing order"), Config.DRAW_ORDER.class, config.drawOrder)
+                        .startEnumSelector(Component.literal("Drawing order"), Config.DRAW_ORDER.class, config.drawOrder)
                         .setDefaultValue(Defaults.order)
                         .setEnumNameProvider(value -> switch (value) {
-                            case Config.DRAW_ORDER.FROM_TOP_LEFT -> Text.of("Top left to bottom right");
-                            case Config.DRAW_ORDER.FROM_BOTTOM_RIGHT -> Text.of("Bottom right to top left");
-                            default -> Text.of(value.toString());
+                            case Config.DRAW_ORDER.FROM_TOP_LEFT -> Component.literal("Top left to bottom right");
+                            case Config.DRAW_ORDER.FROM_BOTTOM_RIGHT -> Component.literal("Bottom right to top left");
+                            default -> Component.literal(value.toString());
                         })
-                        .setTooltip(Text.of("If there are multiple slots of projectiles with equal priority, what is the order they should be drawn from"))
+                        .setTooltip(Component.literal("If there are multiple slots of projectiles with equal priority, what is the order they should be drawn from"))
                         .setSaveConsumer(v -> config.drawOrder = v)
                         .setDisplayRequirement(projectileManagementRequirement)
                         .build()
                 )
                 .addEntry(entry
-                        .startBooleanToggle(Text.of("Prioritise stacks with lower count"), config.prioritiseStacksWithLowerCount)
+                        .startBooleanToggle(Component.literal("Prioritise stacks with lower count"), config.prioritiseStacksWithLowerCount)
                         .setDefaultValue(Defaults.prioritiseStacksWithLowerCount)
-                        .setTooltip(Text.of("If there are multiple slots of projectiles with equal priority, but one has a lower count, should the drawing order be ignored and it be picked instead"))
+                        .setTooltip(Component.literal("If there are multiple slots of projectiles with equal priority, but one has a lower count, should the drawing order be ignored and it be picked instead"))
                         .setSaveConsumer(v -> config.prioritiseStacksWithLowerCount = v)
                         .setDisplayRequirement(projectileManagementRequirement)
                         .build()
                 );
 
 
-        builder.getOrCreateCategory(Text.of("Auto shoot"))
+        builder.getOrCreateCategory(Component.literal("Auto shoot"))
                 .addEntry(entry
-                    .startBooleanToggle(Text.of("Enable feature"), config.enableAutoShootFeature)
+                    .startBooleanToggle(Component.literal("Enable feature"), config.enableAutoShootFeature)
                     .setDefaultValue(Defaults.enableAutoShootFeature)
-                    .setTooltip(Text.of("Automatically shoot the crossbow when it is fully charged and the player releases the right mouse button"))
+                    .setTooltip(Component.literal("Automatically shoot the crossbow when it is fully charged and the player releases the right mouse button"))
                     .setSaveConsumer(v -> config.enableAutoShootFeature= v)
                     .build()
                 );

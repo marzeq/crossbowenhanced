@@ -2,16 +2,16 @@ package me.marzeq.crossbowenhanced;
 
 import me.marzeq.crossbowenhanced.config.Config;
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.item.*;
-import net.minecraft.util.Hand;
+import net.minecraft.client.Minecraft;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.*;
+import net.minecraft.world.InteractionHand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CrossbowEnhanced implements ClientModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("crossbowenhanced");
-    public static final MinecraftClient CLIENT = MinecraftClient.getInstance();
+    public static final Minecraft CLIENT = Minecraft.getInstance();
 
     public static final String MOD_ID = "crossbowenhanced";
 
@@ -28,7 +28,7 @@ public class CrossbowEnhanced implements ClientModInitializer {
 
         if (!(itemStack.getItem() instanceof FireworkRocketItem)) return false;
 
-        var component = itemStack.get(DataComponentTypes.FIREWORKS);
+        var component = itemStack.get(DataComponents.FIREWORKS);
 
         return component != null && !component.explosions().isEmpty();
     }
@@ -55,10 +55,10 @@ public class CrossbowEnhanced implements ClientModInitializer {
     }
 
     public static boolean isCrossbowCharged(ItemStack itemStack) {
-        return !itemStack.get(DataComponentTypes.CHARGED_PROJECTILES).isEmpty();
+        return !itemStack.get(DataComponents.CHARGED_PROJECTILES).isEmpty();
     }
 
-    public static void clickHand(Hand hand) {
-        CLIENT.interactionManager.interactItem(CLIENT.player, hand);
+    public static void clickHand(InteractionHand hand) {
+        CLIENT.gameMode.useItem(CLIENT.player, hand);
     }
 }

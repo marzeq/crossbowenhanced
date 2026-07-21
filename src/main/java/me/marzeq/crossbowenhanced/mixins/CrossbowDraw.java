@@ -3,11 +3,10 @@ package me.marzeq.crossbowenhanced.mixins;
 import me.marzeq.crossbowenhanced.CrossbowEnhanced;
 import me.marzeq.crossbowenhanced.SlotManager;
 import me.marzeq.crossbowenhanced.config.Config;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,9 +15,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.function.Predicate;
 
-@Mixin(MinecraftClient.class)
+@Mixin(Minecraft.class)
 public class CrossbowDraw {
-    @Inject(method="doItemUse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;interactItem(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;", shift = At.Shift.BEFORE))
+    @Inject(method="startUseItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;useItem(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;", shift = At.Shift.BEFORE))
     private void doItemUse(CallbackInfo info) {
         if (!CrossbowEnhanced.config.enableProjectileManagementFeature) {
             return;
@@ -33,9 +32,9 @@ public class CrossbowDraw {
     }
 
     @Unique
-    private void fireProjectile(ClientPlayerEntity player) {
-        var handItemStack = player.getMainHandStack();
-        var offHandItemStack = player.getOffHandStack();
+    private void fireProjectile(LocalPlayer player) {
+        var handItemStack = player.getMainHandItem();
+        var offHandItemStack = player.getOffhandItem();
 
         boolean crossbowInMainHand;
 
@@ -85,7 +84,7 @@ public class CrossbowDraw {
     }
 
     @Unique
-    private int findPreferredStackOfType(ClientPlayerEntity player, Predicate<ItemStack> pickPredicate) {
+    private int findPreferredStackOfType(LocalPlayer player, Predicate<ItemStack> pickPredicate) {
         int slot = -1;
         int minValue = Integer.MAX_VALUE;
 
@@ -94,7 +93,7 @@ public class CrossbowDraw {
         int step = CrossbowEnhanced.config.drawOrder == Config.DRAW_ORDER.FROM_TOP_LEFT ? 1 : -1;
 
         for (int i = start; i != end; i += step) {
-            var itemStack = player.getInventory().getStack(i);
+            var itemStack = player.getInventory().getItem(i);
 
             if (pickPredicate.test(itemStack)) {
                 if (!CrossbowEnhanced.config.prioritiseStacksWithLowerCount) {

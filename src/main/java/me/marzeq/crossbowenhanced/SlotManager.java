@@ -1,6 +1,6 @@
 package me.marzeq.crossbowenhanced;
 
-import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.world.inventory.ContainerInput;
 
 public class SlotManager {
     public static final int OFFHAND_SLOT = 45;
@@ -34,8 +34,8 @@ public class SlotManager {
         if (fireworksSlot < 9) fireworksSlot += 36;
         if (destinationSlot < 9) destinationSlot += 36;
 
-        CrossbowEnhanced.CLIENT.interactionManager.clickSlot(0, fireworksSlot, 0, SlotActionType.PICKUP, CrossbowEnhanced.CLIENT.player);
-        CrossbowEnhanced.CLIENT.interactionManager.clickSlot(0, destinationSlot, 0, SlotActionType.PICKUP, CrossbowEnhanced.CLIENT.player);
-        CrossbowEnhanced.CLIENT.interactionManager.clickSlot(0, fireworksSlot, 0, SlotActionType.PICKUP, CrossbowEnhanced.CLIENT.player);
+        CrossbowEnhanced.CLIENT.gameMode.handleContainerInput(0, fireworksSlot, 0, ContainerInput.PICKUP, CrossbowEnhanced.CLIENT.player);
+        CrossbowEnhanced.CLIENT.gameMode.handleContainerInput(0, destinationSlot, 0, ContainerInput.PICKUP, CrossbowEnhanced.CLIENT.player);
+        CrossbowEnhanced.CLIENT.gameMode.handleContainerInput(0, fireworksSlot, 0, ContainerInput.PICKUP, CrossbowEnhanced.CLIENT.player);
     }
 }
